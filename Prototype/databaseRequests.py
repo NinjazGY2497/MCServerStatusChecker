@@ -52,7 +52,7 @@ def writeRecord(values: list[str, int]):
     while True:
         try:
             worksheet.append_row(values)
-            print(f"Appending row with values: '{values}'")
+            # print(f"Appending row with values: '{values}'")
             return
 
         except Exception as e:
