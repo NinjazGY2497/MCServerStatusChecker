@@ -20,21 +20,12 @@ def serverStatus(server: JavaServer, currentRecord: Record):
         try:
             return server.status()
 
-        except ConnectionResetError:
-            if attempt < 4:
-                time.sleep(2)
-            else:
-                log(f"({attempt + 1}) [{currentRecord.time}] Aborting status check for this minute because server is unreachable.")
-                currentRecord.error = "ConnectionResetError"
-                return None
-
         except Exception as e:
             if attempt < 4:
-                log(f"[{currentRecord.time}] Attempt {attempt + 1} failed: {type(e).__name__} {e}. Retrying in 2s...")
                 time.sleep(2)
             else:
-                log(f"({attempt + 1}) Aborting status check for this minute because ran out of attempts. {type(e).__name__} {e}.")
-                currentRecord.error = f"{type(e).__name__} {e}"
+                log(f"({attempt + 1}) [{currentRecord.attempts}] Aborting status check for this minute because ran out of attempts. {type(e).__name__}: {e}.")
+                currentRecord.error = f"{type(e).__name__}: {e}"
                 return None
 
 def processStatusData(status, currentRecord: Record, prevPlayers: list) -> list: # (Returns player list)
@@ -74,8 +65,7 @@ def checkingLoop(serverIP):
         if status:
             prevPlayers = processStatusData(status, currentRecord, prevPlayers)
 
-        # *Write Record*
-        print(currentRecord.recordAsList)
+        writeRecord(currentRecord.recordAsList)
 
         time.sleep(60)
 
