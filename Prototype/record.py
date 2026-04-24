@@ -24,5 +24,5 @@ class Record:
             self.playersOnline,
             self.attempts,
             self.ping,
-            self.error[:200] # Cap at 200
+            self.error
         ]

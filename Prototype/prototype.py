@@ -25,7 +25,7 @@ def serverStatus(server: JavaServer, currentRecord: Record):
                 time.sleep(2)
             else:
                 log(f"({attempt + 1}) [{currentRecord.attempts}] Aborting status check for this minute because ran out of attempts. {type(e).__name__}: {e}.")
-                currentRecord.error = f"{type(e).__name__}: {e}"
+                currentRecord.error = f"{type(e).__name__}: {e}"[:200]
                 return None
 
 def processStatusData(status, currentRecord: Record, prevPlayers: list) -> list: # (Returns player list)
