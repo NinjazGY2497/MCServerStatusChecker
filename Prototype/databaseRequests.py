@@ -9,7 +9,7 @@ def createGsServiceAcc():
         return serviceAcc
 
     except Exception as e:
-        print(f"Could not carry out service account creation due to a(n) {type(e).__name__}: {e}.")
+        raise Exception(f"Could not carry out service account creation due to a(n) {type(e).__name__}: {e}.")
 
 def openWorksheet(worksheetName):
     try:
@@ -19,7 +19,7 @@ def openWorksheet(worksheetName):
         return spreadWorksheet
 
     except Exception as e:
-        print(f"Could not open worksheet due to a(n) {type(e).__name__}: {e}.")
+        raise Exception(f"Could not open worksheet due to a(n) {type(e).__name__}: {e}.")
 
 def readData(columns: str):
     global worksheet
